@@ -538,16 +538,6 @@ void MPU9250_Read_Gyro(int16_t *Gyro_X, int16_t *Gyro_Y, int16_t *Gyro_Z) {
     *Gyro_Z = (int16_t)(Rec_Data[4] << 8 | Rec_Data[5]);
 }
 
-void MPU9250_Read_Temp(int16_t *Temperature) {
-    uint8_t Rec_Data[2];
-
-    // Read 2 bytes of data starting from TEMP_OUT_H register
-    HAL_I2C_Mem_Read(&hi2c1, MPU9250_ADDRESS, MPU9250_TEMP_OUT_H, 1, Rec_Data, 2, 1000);
-
-    // Convert the received data into 16-bit value
-    *Temperature = (int16_t)(Rec_Data[0] << 8 | Rec_Data[1]);
-}
-
 #define MPU_6050_FIFO 100
 uint32_t filter_index = 0;
 float Roll_filter_array[MPU_6050_FIFO] = {0}, Pitch_filter_array[MPU_6050_FIFO] = {0}, Yaw_filter_array[MPU_6050_FIFO] = {0};
@@ -782,8 +772,6 @@ int main(void)
 		  }
     	  HAL_NVIC_EnableIRQ(EXTI15_10_IRQn);;
       }
-
-	  //HAL_Delay(100);
   }
   /* USER CODE END 3 */
 }
